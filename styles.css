@@ -1,0 +1,12 @@
+#main {
+  margin: 100px auto 100px auto;
+  width: 90%;
+  outline: 1px solid black;
+}
+
+.bubble {
+  display: inline-block;
+  outline: 1px solid red;
+  /* background: blue; */
+  width: 5px;
+}

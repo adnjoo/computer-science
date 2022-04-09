@@ -1,73 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>bubble</title>
-</head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<body>
-    <main id='main' style='margin: 100px auto 100px auto; width:90%; outline: 1px solid black'>
-    </main>
-    <button id='scramble'>scramble</button>
-    <button id='bubble'>bubble</button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
-        integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <body>
+    <main
+      id="main"
+    ></main>
+    <button id="scramble">scramble</button>
+    <button id="bubble">bubble</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
     <script>
-        let arr = Array.from(Array(50).keys());
-        let main = document.getElementById('main')
+      let arr = Array.from(Array(50).keys());
+      let main = document.getElementById('main');
+      for (let i = 0; i < arr.length; i++) {
+        let div = document.createElement('div');
+        div.classList.add('bubble');
+        div.style.height = `${i * 10}px`;
+        div.id = i;
+        main.append(div);
+      }
+      // console.log(arr)
+
+      document.getElementById('scramble').addEventListener('click', () => {
+        // console.log('test')
+        arr = _.shuffle(arr);
         for (let i = 0; i < arr.length; i++) {
-            let div = document.createElement('div')
-            div.style = 'display:inline-block; outline: 1px solid red'
-            div.style.height = `${i * 10}px`
-            div.style.width = `12px`
-            div.id = i
-            main.append(div)
+          document.getElementById(i).style.height = `${arr[i] * 10}px`;
+          document.getElementById(i).style.backgroundColor = `white`;
         }
-        // console.log(arr)
+      });
 
-        document.getElementById('scramble').addEventListener('click', () => {
-            // console.log('test')
-            arr = _.shuffle(arr)
-            for (let i = 0; i < arr.length; i++) {
-                console.log(document.getElementById(i))
-                document.getElementById(i).style.height = `${arr[i] * 10}px`
-                document.getElementById(i).style.backgroundColor = `white`
+      const sleep = (milliseconds) => {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
+      };
+
+
+      let bubble = async (array) => {
+        for (let i = 0; i < array.length; i++) {
+          for (let j = 0; j < array.length; j++) {
+            if (array[j] > array[j + 1]) {
+              //swap
+              let temp = array[j];
+              array[j] = array[j + 1];
+              array[j + 1] = temp;
+              document.getElementById(j + 1).style.height = `${
+                arr[j + 1] * 10
+              }px`;
+            //   document.getElementById(j + 1).style.backgroundColor = 'green';
+              document.getElementById(j).style.height = `${arr[j] * 10}px`;
+            //   document.getElementById(j).style.backgroundColor = `white`;
+              await sleep(20);
+              // if bar reaches end, and the end is sorted change color to green
             }
-        })
-
-        const sleep = (milliseconds) => {
-            return new Promise(resolve => setTimeout(resolve, milliseconds))
+          }
+          console.log(array);
         }
+        return array;
+      };
 
-
-        let bubble = async (array) => {
-            for (let i = 0; i < array.length; i++) {
-                for (let j = 0; j < array.length; j++) {
-                    if (array[j] > array[j + 1]) {
-                        let temp = array[j];
-                        array[j] = array[j + 1];
-                        array[j + 1] = temp;
-                        document.getElementById(j+1).style.height = `${arr[j+1] * 10}px`
-                        document.getElementById(j+1).style.backgroundColor = 'green'
-                        document.getElementById(j).style.height = `${arr[j] * 10}px`
-                        document.getElementById(j).style.backgroundColor = `white`
-                        await sleep(20)
-                    }
-                }
-                console.log(array);
-            }
-            return array;
-        }
-
-        document.getElementById('bubble').addEventListener('click', () => {
-            // sort
-            bubble(arr)
-        })
+      document.getElementById('bubble').addEventListener('click', () => {
+        // sort
+        bubble(arr);
+      });
     </script>
-</body>
-
+  </body>
 </html>
