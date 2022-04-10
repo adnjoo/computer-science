@@ -1,12 +1,8 @@
-const _ = require('lodash');
 const { Timer } = require('timer-node');
 const timer = new Timer({ label: 'test-timer' });
+const { arr } = require('./index.js');
 
-let arr = Array.from(Array(50000).keys());
-
-arr = _.shuffle(arr);
-
-let bubble = async (array) => {
+let bubble = (array) => {
   let n = array.length;
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
@@ -22,8 +18,9 @@ let bubble = async (array) => {
 };
 
 timer.start();
-let s = timer.time();
-bubble(arr);
+console.log('before', arr);
+bubble(arr, 0, arr.length - 1);
 timer.pause();
 let p = timer.pause();
-console.log('start', s, 'pause', p, 'arr', arr);
+console.log(`${p._accumulatedMs} ms elapsed`);
+console.log('after', arr);
